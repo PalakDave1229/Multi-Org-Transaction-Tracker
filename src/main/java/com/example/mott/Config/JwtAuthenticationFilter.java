@@ -52,9 +52,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 jwt = jwtUtil.generateToken((UserDetails) authentication.getPrincipal());
                 response.setHeader("Authorization", "Bearer " + jwt);
                 request.setAttribute("Authorization", "Bearer " + jwt);
-            } else {
-                // Fallback to OAuth2AuthorizedClient if authentication context is unavailable
-                OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient("google", authentication != null ? authentication.getName() : null);
+            } else if (authentication != null && authentication.getName() != null && !authentication.getName().isEmpty()) {
+                OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient("google", authentication.getName());
                 if (authorizedClient != null) {
                     username = authorizedClient.getPrincipalName();
                     if (username != null) {

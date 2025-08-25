@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AuthController {
 
-    @GetMapping("/health")
-    public String health() {
-        return "OK";
+    @GetMapping("/success")
+    public String loginSuccess() {
+        return "Google Login Successful ✅";
     }
 }
